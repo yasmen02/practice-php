@@ -49,10 +49,7 @@ if(isset($_POST['submit'])) {
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
 // Inserting user using the Database object
     $database->insertUser($first_name, $last_name, $email, $password);
-
-
 }
 ?>
