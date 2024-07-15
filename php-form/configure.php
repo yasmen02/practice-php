@@ -44,6 +44,7 @@ class Database{
             $result = $stmt->execute([$first_name, $last_name, $email, $hash]);
             if ($result) {
                 echo "New record created successfully";
+                echo '<a href="login.html">LogIn!</a>';
             } else {
                 echo "Error inserting record";
             }}
