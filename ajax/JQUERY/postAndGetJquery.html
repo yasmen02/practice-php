@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>AJAX</title>
+</head>
+<body>
+<button data-page="demo1.html">Get info </button>
+<!--<button data-page="demo2.html">Get Demo two </button>-->
+<div id="show"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(function (){
+        $('button').on('click',function(){
+           // $.get('auth.php?name=yasmen&lastlogin=today',function (data,status,xhr){
+           //     console.log(data);
+           //     console.log(status);
+           //     console.log(xhr);
+           // });
+            //.get (url,callbackfunction)
+            //.post(url,data,callbackfunction)
+            $.post('auth.php',{name:"yasmen", lastlogin:"today"},function (data,status,xhr){
+                console.log(data);
+                console.log(status);
+                console.log(xhr);
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>AJAX</title>
+</head>
+<body>
+<input type="text" class="my-comment" >
+<button data-page="demo1.html">Get info </button>
+
+<!--<button data-page="demo2.html">Get Demo two </button>-->
+<div id="show" class="show"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(function (){
+        $('button').on('click',function(){
+            $.ajax({
+                //type: 'post' //alias for method jquery before 1.9.0
+                // cashe: false,//cashe request
+                // async:false,
+                // timeout:3000,//timeout for request
+                // dataType: 'html',//help jquery to handle data (html ,json,xml,script,txt) default is intelligence guess
+                // username: 'yasmen',//for Authenication
+                // password:'yasmen12',
+                // contentType: 'multipart/form-data',//content type for the request , default is application/x-www-form-urlencoded
+                method: 'POST' ,//method used for the request
+                url: 'comment.php',//URL to send
+                data: {comment:$('.my-comment').val() },//data to send with the request
+                // beforeSend:function (xhr) {
+                //     console.log(`before send ${xhr}`);
+                // },
+                success: function (data,status,xhr) {
+                    //function to run when request succeeded
+                    console.log(data);
+                    console.log(status);
+                    console.log(xhr);
+                    console.log('success');
+                    $('#show').html(data);
+                },
+                error:function (xhr,status,error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);//error msg
+                },
+                complete:function(xhr,status){
+                    //function to run when request to complete
+                    console.log(xhr);
+                    console.log(status);
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>
