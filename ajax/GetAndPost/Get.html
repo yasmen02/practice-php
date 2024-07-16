@@ -1,0 +1,21 @@
+<html>
+<head>
+    <button onclick="getRepo2()"> Get Repo2</button>
+    <script>
+        function getRepo2(){
+            var myRequest = new XMLHttpRequest();
+            myRequest.onreadystatechange =function (){
+                if (this.readyState === 4 && this.status===200){
+                    console.log(this.responseText)
+                }
+            };
+            myRequest.open('GET','Get.php?name=yasmen&&lastlogin=today', true);
+            myRequest.send();
+        }
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>

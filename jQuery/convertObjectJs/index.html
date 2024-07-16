@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax</title>
+</head>
+<body>
+<button onclick="getRepo()"> Get Repo</button>
+<br>
+<br>
+<button onclick="getRepo2()"> Get Repo2</button>
+<div id="show"></div>
+<script>
+    function getRepo(){
+        var myReq = new XMLHttpRequest();
+        //on ready state change  => function called when ready state change
+        /*
+        ready state => status the request
+        [0]=>req not initialized
+        [1]=>server connection established
+        [2]=> req recieved
+        [3]=> processing req
+        [4]=>req in finished and response is ready
+         */
+        /*
+        status => response status code
+        404 => req not found
+        200 => success
+       */
+        /*
+            response text => server sent response
+         */
+        myReq.onreadystatechange =function (){
+        if (this.readyState === 4 && this.status===200){
+            console.log(this.responseText);
+        }
+        };
+        //XMLHTTPRequest.open(method,url,async,user,pass)
+        // async execute =>true
+        // sync execute =>false
+        myReq.open('GET','https://admin.joacademy.net/api/v1/settings', true)
+        myReq.send()
+    }
+    function getRepo2(){
+        var myRequest = new XMLHttpRequest();
+        myRequest.onreadystatechange =function (){
+            if (this.readyState === 4 && this.status===200){
+                // console.log(JSON.parse(this.responseText));
+                // console.log(this.responseText);
+
+                // convert responsetext to js object
+                var myJsObject=JSON.parse(this.responseText);
+                var myText ='';
+                for (var i =0; i< myJsObject.length; i++){
+                    console.log(myJsObject[i]);
+                    myText+=myJsObject[i].firstName + "<br>";
+                    console.log(myText)
+                }
+                document.getElementById('show').innerHTML= myText;
+            }
+        };
+        //XMLHTTPRequest.open(method,url,async,user,pass)
+        // async execute =>true
+        // sync execute =>false
+        myRequest.open('GET','object.json', true);
+        myRequest.send();
+    }
+</script>
+</body>
+</html>
