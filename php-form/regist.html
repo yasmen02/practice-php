@@ -1,37 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"/>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+          rel="stylesheet"/>
     <link rel="stylesheet" href="regist.css">
-      <!-- Include SweetAlert CSS -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
-      <title>Regist</title>
-  </head>
-  <body>
+    <!-- Include SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
+    <title>Regist</title>
+</head>
+<body>
 
-        <section>
-            <form method="post" action="regist.php">
-            <div class="form_div">
-                <label >First Name:</label><br>
-                <input type="text" class="field_class" name="first_name" placeholder="First name" required><br>
-                <label >last Name:</label><br>
-                <input type="text" class="field_class" name="last_name" placeholder="last name" required><br>
-                <label>Login:</label>
-                <input class="field_class"  type="text" name="email" placeholder="Email" required>
-                <label>Password:</label>
-                <input  class="field_class"  type="password" name="password" placeholder="password" required>
-                <button class="submit_class" name="submit" type="submit" >LogIn</button>
-            </div>
-            <div class="info_div">
-                <p>already have an account? <a href="login.html">LogIn!</a></p>
-            </div>
-        </form>
+<section>
+    <form id="registrationForm" method="post" action="#">
+        <div class="form_div">
+            <label>First Name:</label><br>
+            <input type="text" class="field_class" name="first_name" id="first_name" placeholder="First name"
+                   required><br>
+            <label>last Name:</label><br>
+            <input type="text" class="field_class" name="last_name" id="last_name" placeholder="last name" required><br>
+            <label>Login:</label>
+            <input class="field_class" type="text" name="email" id="email" placeholder="Email" required>
+            <label>Password:</label>
+            <input class="field_class" type="password" name="password" id="password" placeholder="password" required>
+            <button class="submit_class" name="submit" type="submit">LogIn</button>
+        </div>
+        <div class="info_div">
+            <p>already have an account? <a href="login.html">LogIn!</a></p>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#registrationForm').submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting via the browser
+
+                // Gather form data
+                var formData = {
+                    'first_name': $('#first_name').val(),
+                    'last_name': $('#last_name').val(),
+                    'email': $('#email').val(),
+                    'password': $('#password').val()
+                };
+                // Perform AJAX POST request
+                $.ajax({
+                    type: 'POST',
+                    url: 'regist.php',
+                    data: formData,
+                    dataType: 'json', // Parse response as JSON
+                    success: function (response) {
+                        if (response.success) {
+                            // Show success message (e.g., using SweetAlert2)
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registration Successful!',
+                                text: response.message
+                            });
+                            // Optionally clear form inputs after successful registration
+                            $('#registrationForm')[0].reset();
+                        } else {
+                            // Show error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Registration Failed',
+                                text: response.message
+                            });
+                            console.log(response);
+                        }
+                    },
+                    error: function () {
+                        // Handle AJAX request failure
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </section>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.js"></script>
-
 </body>
 </html>
