@@ -40,16 +40,38 @@
 //?>
 <?php
 require_once 'configure.php';
-if(isset($_POST['submit'])) {
-// Creating a new instance of the Database class
+//if(isset($_POST['submit'])) {
+//// Creating a new instance of the Database class
+//    $database = new Database();
+//
+//// Retrieving form data
+//    $first_name = $_POST['first_name'];
+//    $last_name = $_POST['last_name'];
+//    $email = $_POST['email'];
+//    $password = $_POST['password'];
+//// Inserting user using the Database object
+//    $database->insertUser($first_name, $last_name, $email, $password);
+//
+//}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Creating a new instance of the Database class
     $database = new Database();
 
-// Retrieving form data
+    // Retrieving form data
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-// Inserting user using the Database object
-    $database->insertUser($first_name, $last_name, $email, $password);
+
+    // Inserting user using the Database object
+    $result = $database->insertUser($first_name, $last_name, $email, $password);
+
+    if ($result) {
+        // Return success message as JSON
+        echo json_encode(['success' => true, 'message' => 'Registration successful!']);
+    } else {
+        // Return error message as JSON
+        echo json_encode(['success' => false, 'message' => 'Registration failed!']);
+    }
 }
 ?>
